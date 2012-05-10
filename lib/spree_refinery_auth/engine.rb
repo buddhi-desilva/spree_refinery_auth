@@ -25,7 +25,7 @@ module SpreeRefineryAuth
     config.to_prepare do
       ::Refinery::AdminController.send :include, ::RestrictRefineryToRefineryUsers
       ::Refinery::AdminController.send :before_filter, :restrict_refinery_to_refinery_users
-      [::Refinery::ApplicationController, ::Refinery::Admin::DashboardController, ::ApplicationController].each do |c|
+      [::Refinery::ApplicationController, ::Refinery::AdminController, ::ApplicationController].each do |c|
         c.send :include, ::Refinery::AuthenticatedSystem
       end
     end
