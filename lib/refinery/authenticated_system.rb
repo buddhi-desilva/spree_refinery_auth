@@ -6,7 +6,7 @@ module Refinery
     def store_location
       session[:return_to] = request.fullpath.sub("//", "/")
     end
- 
+
     # Redirect to the URI stored by the most recent store_location call or
     # to the passed default.
     def redirect_back_or_default(default)
@@ -40,11 +40,16 @@ module Refinery
         def refinery_user_signed_in?
           user_signed_in?
         end
-                  
+
         def authenticate_refinery_user!
           authenticate_user!
         end
     ### END of Spree + Refinery patch
+
+    ## Just installed shit.
+    def just_installed?
+      Spree::Role[:refinery].users.empty?
+    end
 
     protected :store_location, :redirect_back_or_default, :refinery_user?
 

@@ -1,7 +1,7 @@
 module SpreeRefineryAuth
   class Engine < Rails::Engine
     engine_name 'spree_refinery_auth'
-    
+
     config.autoload_paths += %W(#{config.root}/lib)
     config.before_initialize do
       Dir.glob("#{config.root}/lib/refinery/*.rb").each do |f|
@@ -25,7 +25,15 @@ module SpreeRefineryAuth
     config.to_prepare do
       ::Refinery::AdminController.send :include, ::RestrictRefineryToRefineryUsers
       ::Refinery::AdminController.send :before_filter, :restrict_refinery_to_refinery_users
+      [::Refinery::ApplicationController, ::Refinery::Admin::DashboardController, ::ApplicationController].each do |c|
+        c.send :include, ::Refinery::AuthenticatedSystem
+      end
     end
 
+    # config.after_initialize do
+    #   [::Refinery::ApplicationController, ::ApplicationController].each do |c|
+    #     c.send :include, ::Refinery::AuthenticatedSystem
+    #   end
+    # end
   end
 end
