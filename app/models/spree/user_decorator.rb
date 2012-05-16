@@ -40,7 +40,7 @@ Spree::User.class_eval do
 
   def has_role?(title)
     raise ArgumentException, "Role should be the title of the role not a role object." if title.is_a?(Spree::Role)
-    roles.any?{|r| r.name == title.to_s.camelize || r.name = title.to_s}
+    roles.any?{ |r| r.name == title.to_s.camelize }
   end
 
   def can_edit?(user_to_edit = self)
