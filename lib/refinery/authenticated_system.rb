@@ -34,7 +34,7 @@ module Refinery
 
     ### PATCH FOR SPREE AUTH *and* REFINERY AUTH
         def current_refinery_user
-          current_user
+          current_refinery_user ||= Refinery::User.find(current_user)
         end
 
         def refinery_user_signed_in?
