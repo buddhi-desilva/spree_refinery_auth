@@ -25,9 +25,16 @@ module SpreeRefineryAuth
     config.to_prepare do
       ::Refinery::AdminController.send :include, ::RestrictRefineryToRefineryUsers
       ::Refinery::AdminController.send :before_filter, :restrict_refinery_to_refinery_users
-      [::Refinery::ApplicationController, ::Refinery::AdminController, ::ApplicationController].each do |c|
+      [::Refinery::ApplicationController, ::Refinery::AdminController, ::ApplicationController, ::Spree::BaseController].each do |c|
         c.send :include, ::Refinery::AuthenticatedSystem
       end
+
+      Devise.setup do |devise_config|
+        devise_config.warden do |manager|
+          manager.failure_app = SpreeRefineryAuth::AuthenticationFailureRedirection
+        end
+      end
+
     end
 
     # config.after_initialize do

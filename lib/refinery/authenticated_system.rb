@@ -10,7 +10,7 @@ module Refinery
     # Redirect to the URI stored by the most recent store_location call or
     # to the passed default.
     def redirect_back_or_default(default)
-      redirect_to(session[:return_to] || default)
+      redirect_to(session[:return_to].gsub('//', '/') || default)
       session[:return_to] = nil
     end
 
