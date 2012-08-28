@@ -1,5 +1,5 @@
 module Refinery
-  class User < Spree::User
+  class User < User
 
   end
 end

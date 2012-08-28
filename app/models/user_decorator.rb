@@ -1,8 +1,8 @@
-Spree::User.class_eval do
+User.class_eval do
   extend FriendlyId
   # For Refinery
-  accepts_nested_attributes_for :roles
-  attr_accessible :roles_attributes, :roles
+  # accepts_nested_attributes_for :roles
+  # attr_accessible :roles_attributes, :roles
   has_many :plugins, :class_name => "Refinery::UserPlugin", :order => "position ASC", :dependent => :destroy
   accepts_nested_attributes_for :plugins
   attr_accessible :plugins_attributes, :plugins
@@ -35,12 +35,12 @@ Spree::User.class_eval do
 
   def add_role(title)
     raise ArgumentException, "Role should be the title of the role not a role object." if title.is_a?(Spree::Role)
-    roles << Spree::Role[title] unless has_role?(title)
+    spree_roles << Spree::Role[title] unless has_role?(title)
   end
 
   def has_role?(title)
     raise ArgumentException, "Role should be the title of the role not a role object." if title.is_a?(Spree::Role)
-    roles.any?{ |r| r.name == title.to_s.camelize || r.name == title.to_s }
+    spree_roles.any?{ |r| r.name == title.to_s.camelize || r.name == title.to_s }
   end
 
   def can_edit?(user_to_edit = self)
@@ -54,7 +54,7 @@ Spree::User.class_eval do
     user_to_delete.persisted? and
     id != user_to_delete.id and
     !user_to_delete.has_role?(:superuser) and
-    Spree::Role[:refinery].users.count > 1
+    Spree::Role.find_by_name(:refinery).users.count > 1
   end
 
   def title

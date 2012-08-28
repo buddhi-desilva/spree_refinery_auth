@@ -10,12 +10,12 @@ module Refinery
       before_filter :load_available_plugins_and_roles, :only => [:new, :create, :edit, :update]
 
       def new
-        @user = Spree::User.new
+        @user = User.new
         @selected_plugin_names = []
       end
 
       def create
-        @user = Spree::User.new(params[:user])
+        @user = User.new(params[:user])
         @selected_plugin_names = params[:user][:plugins] || []
         @selected_role_names = params[:user][:roles] || []
 
@@ -37,7 +37,7 @@ module Refinery
       end
 
       def edit
-        @user = Spree::User.find(params[:id])
+        @user = User.find(params[:id])
 
         redirect_unless_user_editable!
 

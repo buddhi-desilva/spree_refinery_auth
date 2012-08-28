@@ -50,7 +50,7 @@ module Refinery
     end
 
     def just_installed?
-      Spree::Role[:refinery].users.empty?
+      Spree::Role.find_by_name(:refinery).users.empty?
     end
 
     def local_request?

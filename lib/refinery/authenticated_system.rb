@@ -48,7 +48,7 @@ module Refinery
 
     ## Just installed shit.
     def just_installed?
-      Spree::Role[:refinery].users.empty?
+      Spree::Role.find_by_name(:refinery).users.empty?
     end
 
     protected :store_location, :redirect_back_or_default, :refinery_user?
