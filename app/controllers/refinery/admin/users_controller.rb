@@ -2,7 +2,7 @@ module Refinery
   module Admin
     class UsersController < Refinery::AdminController
 
-      crudify :'spree/user',
+      crudify :'user',
               :order => 'email ASC',
               :title_attribute => 'email',
               :xhr_paging => true
